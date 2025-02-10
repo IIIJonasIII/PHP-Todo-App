@@ -33,14 +33,14 @@
         file_put_contents($file, json_encode($array));
     }
 
-    function laddaCsv($file){
+    function laddaCsv($file){ //fel
         $file = fopen("$file", "r");
         fgetcsv($file);
         fclose($file);
     }
 
     function laddaTxt($file){
-        return file($file);
+        return array_map('trim', file($file));
     }
 
     function laddaJson($file){

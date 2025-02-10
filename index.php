@@ -1,15 +1,19 @@
 <?php 
+    session_start();
     require("php/functions.php");
     $txtFile = "assets/todo.txt";
     $jsonFile = "assets/todo.json";
     $csvFile = "assets/todo.csv";
-    $knappFärg = isset($_POST["nuvarandeFärg"]) && $_POST["nuvarandeFärg"] === "white" ? "green" : "white";
-    $notes = ["Handla", "Fotbollsträning", "Laga mat"];
-    
+
+    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["klar"])) {
+        $knappFärg = $_POST["nuvarandeFärg"] === "white" ? "green" : "white";
+    }
+
+    $notes = ["hej", "hejehj"]; 
     // $notes = file_exists($jsonFile) ? laddaJson($jsonFile) : ["Handla", "Fotbollsträning", "Laga mat"];
 
     if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["textruta"])){
-        $notes[] = $_POST["textruta"];
+        $notes[] = test_input($_POST["textruta"]);
     }
 ?>
 <!DOCTYPE html>
@@ -28,17 +32,38 @@
             <input type="text" name="textruta">
             <button type="submit">+</button>
         </form>
-        <form method="post" class='notes'>
-            <p>$note</p>
-            <section class='small-buttons'>
-                <button type="submit" name="klar" style="color: <?php echo $knappFärg?>">✓</button>
-                <input type="hidden" name="nuvarandeFärg" value="<?php echo $knappFärg ?>">
-                <button type="submit" name="redigera">✎</button>
-                <button type="submit" name="tabort">X</button>
-            </section>
-        </form>
+
         <?php 
-            skrivUt($notes);
+            $knappFärger = array_fill(0, count($notes), "white"); 
+
+            if (!isset($_SESSION['knappFärger'])) {
+                $_SESSION['knappFärger'] = array_fill(0, count($notes), "white");
+            }
+
+            for ($i = 0; $i < count($notes); $i++) {
+                // Om knappen "klar" trycks ska färgen ändras och sparas i sessionen
+                if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["klar"]) && $_POST["index"] == $i) {
+                    $_SESSION['knappFärger'][$i] = $_POST["nuvarandeFärg"] === "white" ? "green" : "white";
+                }
+
+                echo "<form method='post' class='notes'>
+                    <p>{$notes[$i]}</p>
+                    <section class='small-buttons'>
+                        <button type='submit' name='klar' style='color: " . htmlspecialchars($_SESSION['knappFärger'][$i]) . "'>✓</button>
+                        <input type='hidden' name='index' value='{$i}'>
+                        <input type='hidden' name='nuvarandeFärg' value='" . htmlspecialchars($_SESSION['knappFärger'][$i]) . "'>
+                        <button type='submit' name='redigera'>✎</button>
+                        <button type='submit' name='tabort'>X</button>
+                    </section>
+                </form>";
+            }
+        ?>
+
+        
+        <?php 
+            // if(isset($notes)){
+            //     skrivUt($notes);
+            // }
         ?>
 
         <form method="POST" class="big-buttons">
