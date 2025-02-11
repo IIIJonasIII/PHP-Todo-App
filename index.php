@@ -1,8 +1,7 @@
 <?php 
     require("php/functions.php");
     $jsonFile = "assets/todo.json";
-    $notes = laddaJson($jsonFile);
-        
+    $notes = laddaJson($jsonFile);  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,6 +25,29 @@
             if (!empty($_GET["textruta"])) {
                 $note = test_input($_GET["textruta"]);
                 $notes[] = ["task" => $note, "done" => false];
+                sparaJson($jsonFile, $notes);
+            }
+            
+            if (isset($_GET["klar"])){
+                $klar = $_GET["klar"];
+                if ($notes[$klar]["done"] == true){
+                    $notes[$klar]["done"] = false;
+                }
+                else if ($notes[$klar]["done"] == false){
+                    $notes[$klar]["done"] = true;
+                }
+                sparaJson($jsonFile, $notes); 
+            }
+
+            if (isset($_GET["redigera"])){
+                $redigera = $_GET["redigera"];
+                
+            }
+
+            if (isset($_GET["tabort"])) {
+                $tabort = $_GET['tabort'];
+                unset($notes[$tabort]);  
+                $notes = array_values($notes);  
                 sparaJson($jsonFile, $notes);
             }
 

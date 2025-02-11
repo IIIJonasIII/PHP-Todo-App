@@ -1,26 +1,18 @@
 [
     {
         "task": "Handla",
-        "done": false
+        "done": true
     },
     {
         "task": "Fotbollstr\u00e4ning",
-        "done": false
+        "done": true
     },
     {
         "task": "Laga mat",
-        "done": false
+        "done": true
     },
     {
         "task": "sova",
-        "done": false
-    },
-    {
-        "task": "sova mer",
-        "done": false
-    },
-    {
-        "task": "sova \u00e4nnu mer",
-        "done": false
+        "done": true
     }
 ]
