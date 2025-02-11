@@ -18,5 +18,9 @@
     {
         "task": "sova mer",
         "done": false
+    },
+    {
+        "task": "sova \u00e4nnu mer",
+        "done": false
     }
 ]
