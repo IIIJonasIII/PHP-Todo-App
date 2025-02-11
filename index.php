@@ -1,20 +1,8 @@
 <?php 
-    session_start();
     require("php/functions.php");
-    $txtFile = "assets/todo.txt";
     $jsonFile = "assets/todo.json";
-    $csvFile = "assets/todo.csv";
-
-    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["klar"])) {
-        $knappFärg = $_POST["nuvarandeFärg"] === "white" ? "green" : "white";
-    }
-
-    $notes = ["hej", "hejehj"]; 
-    // $notes = file_exists($jsonFile) ? laddaJson($jsonFile) : ["Handla", "Fotbollsträning", "Laga mat"];
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["textruta"])){
-        $notes[] = test_input($_POST["textruta"]);
-    }
+    $notes = laddaJson($jsonFile);
+        
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,78 +21,25 @@
             <button type="submit">+</button>
         </form>
 
-        <?php 
-            $knappFärger = array_fill(0, count($notes), "white"); 
-
-            if (!isset($_SESSION['knappFärger'])) {
-                $_SESSION['knappFärger'] = array_fill(0, count($notes), "white");
-            }
-
-            for ($i = 0; $i < count($notes); $i++) {
-                // Om knappen "klar" trycks ska färgen ändras och sparas i sessionen
-                if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["klar"]) && $_POST["index"] == $i) {
-                    $_SESSION['knappFärger'][$i] = $_POST["nuvarandeFärg"] === "white" ? "green" : "white";
-                }
-
-                echo "<form method='post' class='notes'>
-                    <p>{$notes[$i]}</p>
-                    <section class='small-buttons'>
-                        <button type='submit' name='klar' style='color: " . htmlspecialchars($_SESSION['knappFärger'][$i]) . "'>✓</button>
-                        <input type='hidden' name='index' value='{$i}'>
-                        <input type='hidden' name='nuvarandeFärg' value='" . htmlspecialchars($_SESSION['knappFärger'][$i]) . "'>
-                        <button type='submit' name='redigera'>✎</button>
-                        <button type='submit' name='tabort'>X</button>
-                    </section>
-                </form>";
-            }
-        ?>
-
-        
-        <?php 
-            // if(isset($notes)){
-            //     skrivUt($notes);
-            // }
-        ?>
-
-        <form method="POST" class="big-buttons">
-            <section class="spara">
-                <p>Spara: </p>
-                <button type="submit" name="sparatxt">.TXT</button>
-                <button type="submit" name="sparajson">.JSON</button>
-                <button type="submit" name="sparacsv">.CSV</button>
-            </section>
-            <section class="ladda">
-                <p>Ladda: </p>
-                <button type="submit" name="laddatxt">.TXT</button>
-                <button type="submit" name="laddajson">.JSON</button>
-                <button type="submit" name="laddacsv">.CSV</button>
-            </section>
-        </form>
-        
-        <?php 
-            if ($_SERVER["REQUEST_METHOD"] === "POST") {
-                if(isset($_POST["sparatxt"])){
-                    sparaTxt($txtFile, $notes);
-                }
-                if(isset($_POST["sparajson"])){
-                    sparaJson($jsonFile, $notes);
-                }
-                if(isset($_POST["sparacsv"])){
-                    sparaCsv($csvFile, $notes);
-                }
-                if(isset($_POST["laddatxt"])){
-                    $notes = laddaTxt($txtFile);
-                }
-                if(isset($_POST["laddajson"])){
-                    $notes = laddaJson($jsonFile);
-                }
-                if(isset($_POST["laddacsv"])){
-                    $notes = laddaCsv($csvFile);
-                }
+        <?php   
+            
+            if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["textruta"])) {
+                $notes[] = test_input($_POST["textruta"]);
+                sparaJson($jsonFile, $notes);
             }
             
+            foreach ($notes as $index => $note) {
+                echo "<form method='post' class='notes'>
+                        <p>{$note}</p>
+                        <section class='small-buttons'>
+                            <button type='submit' name='klar'>✓</button>
+                            <button type='submit' name='redigera'>✎</button>
+                            <button type='submit' name='tabort'>X</button>
+                        </section>
+                    </form>";
+            }
         ?>
- 
+
     </section>
 </body>
 </html>

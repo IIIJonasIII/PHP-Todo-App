@@ -19,35 +19,26 @@
             ";
         }
     }
-    function sparaCsv($file, $array){
-        $file = fopen("$file", "w");
-        fputcsv($file, $array);
-        fclose($file);
+
+    function sparaJson($filename, $array){
+        file_put_contents($filename, json_encode($array, JSON_PRETTY_PRINT));
     }
 
-    function sparaTxt($file, $array){
-        file_put_contents($file, implode(PHP_EOL, $array));
+    function laddaJson($filename) {
+        $array = [];
+        if (file_exists($filename)) {
+            $content = trim(file_get_contents($filename));
+            if (!empty($content)) {
+                $array = json_decode($content, true);
+                if (!is_array($array)) {
+                    $array = []; // Säkerhetsåtgärd om filen har ogiltig JSON
+                }
+            }
+        }
+        return $array;
     }
 
-    function sparaJson($file, $array){
-        file_put_contents($file, json_encode($array));
-    }
-
-    function laddaCsv($file){ //fel
-        $file = fopen("$file", "r");
-        fgetcsv($file);
-        fclose($file);
-    }
-
-    function laddaTxt($file){
-        return array_map('trim', file($file));
-    }
-
-    function laddaJson($file){
-        return json_decode(file_get_contents($file), true);
-    }
-    function uppdateraSidan(){
-        header("Location: " . $_SERVER["PHP_SELF"]); 
-        exit;
+    function KnapparTillVit($array) {
+        $_SESSION['knappFärger'] = array_fill(0, count($array), "white");
     }
 ?>
