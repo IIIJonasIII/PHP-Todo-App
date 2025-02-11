@@ -38,7 +38,5 @@
         return $array;
     }
 
-    function KnapparTillVit($array) {
-        $_SESSION['knappFärger'] = array_fill(0, count($array), "white");
-    }
+    
 ?>
