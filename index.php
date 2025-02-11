@@ -30,10 +30,6 @@
                 sparaJson($jsonFile, $notes);
             }
 
-            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["klar"])) {
-                echo "hej";
-            }
-            
             foreach ($notes as $index => $note) {
                 echo '<form method="post" class="notes">
                         <p>' . ($index + 1) . '. ' . test_input($note["task"]) . '</p>
@@ -42,7 +38,7 @@
                             <button type="submit" name="redigera">✎</button>
                             <button type="submit" name="tabort">X</button>
                         </section>
-                        <input type="hidden" name="index" value="' . $index . '">
+                        
                     </form>';
             }
         ?>

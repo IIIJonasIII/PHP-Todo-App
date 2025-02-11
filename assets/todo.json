@@ -12,7 +12,11 @@
         "done": false
     },
     {
-        "task": "Sova",
+        "task": "sova",
+        "done": false
+    },
+    {
+        "task": "sova mer",
         "done": false
     }
 ]
