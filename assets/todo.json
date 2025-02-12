@@ -1,18 +1,42 @@
 [
     {
-        "task": "Handla",
-        "done": true
+        "task": "hejhej",
+        "done": false
     },
     {
-        "task": "Fotbollstr\u00e4ning",
-        "done": true
+        "task": "hejhej",
+        "done": false
     },
     {
-        "task": "Laga mat",
-        "done": true
+        "task": "Kv\u00e4llsmat",
+        "done": false
     },
     {
-        "task": "sova",
-        "done": true
+        "task": "fregergerger",
+        "done": false
+    },
+    {
+        "task": "ergergeargeragaerg",
+        "done": false
+    },
+    {
+        "task": "ergergeargeragaerg",
+        "done": false
+    },
+    {
+        "task": "ergergeargeragaerg",
+        "done": false
+    },
+    {
+        "task": "ergergeargeragaerg",
+        "done": false
+    },
+    {
+        "task": "ergergeargeragaerg",
+        "done": false
+    },
+    {
+        "task": "ergergeargeragaerg",
+        "done": false
     }
 ]
