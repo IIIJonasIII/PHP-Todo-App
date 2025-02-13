@@ -14,26 +14,25 @@
 </head>
 <body>
     <section class="page-wrapper">
-        <h1>TODO-APP</h1>
-
+        <a href="index.php">
+            <h1>TODO-APP</h1>
+        </a>
+        <form method="GET" class="textfält">
+            <input type="text" name="textruta">
+            <button type="submit">+</button>
+        </form>
         
         <?php
 
-            echo '   
-            <form method="GET" class="textfält">
-            <input type="text" name="textruta">
-            <button type="submit">+</button>
-            </form>';
-
-            $gömd = 'type="hidden"';
-            if (isset($_GET["redigera"])){
-                $gömd = 'type="text"';
+            if (isset($_GET["redigera"])) {
                 $index = $_GET["redigera"];
-                if (!empty($_GET["ändraruta"])) {
-                    $nyÄndring = $_GET["ändraruta"];
-                    $notes[$index]['task'] = $nyÄndring;
-                    sparaJson($jsonFile, $notes);
-                }
+            }
+        
+            if (isset($_GET["ändraruta"]) && isset($_GET["index"])) {
+                $index = $_GET["index"];
+                $nyÄndring = test_input($_GET["ändraruta"]);
+                $notes[$index]['task'] = $nyÄndring;
+                sparaJson($jsonFile, $notes);
             }
             
             if (!empty($_GET["textruta"])) {
@@ -65,20 +64,25 @@
             foreach ($notes as $index => $note) {
                 $färg = $note["done"] ? "green" : "white";
                 echo '<form method="GET" class="notes">
-                        <section class="parent">
-                            <input '.$gömd.' name="ändraruta" class="gömdbox" value="' . test_input($note["task"]) . '"></input>
-                            <button '.$gömd.' class="gömdknapp" type="submit">+</button>
                             <p>' . ($index + 1) . '. ' . test_input($note["task"]) . '</p>
-                        </section>
                         <section class="small-buttons">
                             <button style="color: '.$färg.'" type="submit" name="klar" value="' . $index . '">✓</button>
                             <button type="submit" name="redigera" value="' . $index . '">✎</button>
                             <button type="submit" name="tabort" value="' . $index . '">X</button>
                         </section>
-                    </form>';
+                    </form>
+                   ';
             }
-            
-        ?>
+            if (isset($_GET["redigera"]) && isset($notes[$_GET["redigera"]])) {
+                $index = $_GET["redigera"];
+                echo '
+                <form method="GET" class="textfält">
+                    <input type="hidden" name="index" value="' . $index . '">
+                    <input type="text" name="ändraruta" value="' . test_input($notes[$index]["task"]) . '">
+                    <button type="submit">></button>
+                </form>';
+            }
+            ?>
 
     </section>
 </body>

@@ -1,42 +1,14 @@
 [
     {
-        "task": "hejhej",
+        "task": "Vakna",
         "done": false
     },
     {
-        "task": "hejhej",
+        "task": "Frukost",
         "done": false
     },
     {
-        "task": "Kv\u00e4llsmat",
-        "done": false
-    },
-    {
-        "task": "fregergerger",
-        "done": false
-    },
-    {
-        "task": "ergergeargeragaerg",
-        "done": false
-    },
-    {
-        "task": "ergergeargeragaerg",
-        "done": false
-    },
-    {
-        "task": "ergergeargeragaerg",
-        "done": false
-    },
-    {
-        "task": "ergergeargeragaerg",
-        "done": false
-    },
-    {
-        "task": "ergergeargeragaerg",
-        "done": false
-    },
-    {
-        "task": "ergergeargeragaerg",
+        "task": "Middag",
         "done": false
     }
 ]
