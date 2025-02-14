@@ -1,7 +1,13 @@
 <?php 
     require("php/functions.php");
+
     $jsonFile = "assets/todo.json";
-    $notes = laddaJson($jsonFile);  
+    $papperskorgFile = "assets\papperskorg.json";
+    
+    $notes = laddaJson($jsonFile);
+    $papperskorg = laddaJson($papperskorgFile);
+    
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,14 +35,14 @@
                 sparaJson($jsonFile, $notes);
             }
 
-            //Klar-knapp
-            if (isset($_GET["klar"])){
+            // Klar-knapp
+            if (isset($_GET["klar"]) && isset($notes[$_GET["klar"]])) {
                 $klar = $_GET["klar"];
-                if ($notes[$klar]["done"] == true){
+                if ($notes[$klar]["done"] == true) {
                     $notes[$klar]["done"] = false;
                     $färg = "white";
                 }
-                else if ($notes[$klar]["done"] == false){
+                else if ($notes[$klar]["done"] == false) {
                     $notes[$klar]["done"] = true;
                     $färg = "green";
                 }
@@ -59,9 +65,26 @@
             //Ta bort-knapp
             if (isset($_GET["tabort"])) {
                 $tabort = $_GET['tabort'];
+
+                $papperskorg[] = $notes[$tabort];
+                sparaJson($papperskorgFile, $papperskorg);
+
                 unset($notes[$tabort]);  
                 $notes = array_values($notes);  
                 sparaJson($jsonFile, $notes);
+            }
+
+            //Papperskorg-knapp "Återställ"
+            if(isset($_GET["papperskorg"]) && !empty($papperskorg)){
+                $notes = array_merge($notes, $papperskorg);
+                $notes = array_values($notes);
+                sparaJson($jsonFile, $notes);
+                sparaJson($papperskorgFile, []);
+            }
+
+            //Papperskorg knapp "Rensa"
+            if (isset($_GET['rensa'])) {
+                sparaJson($papperskorgFile, []);  
             }
 
             //Utskrift av anteckningar + knappar
@@ -89,6 +112,15 @@
                 </form>';
             }
             ?>
+            <section class="bottom">
+                <form method="GET" class="papperskorgikon">
+                    <label for="papperskorg">Papperskorg:</label>
+                    <button type="submit" name="papperskorg" id="papperskorg">Hämta</button>
+                </form>
+                <form method="GET" class="papperskorgikon">
+                    <button type="submit" name="rensa" id="rensa">Rensa</button>
+                </form>
+            </section>
 
     </section>
 </body>

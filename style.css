@@ -35,6 +35,7 @@ body{
     background: linear-gradient(180deg, var(--box-color) 0%, hwb(180 0% 25%) 35%, hwb(180 0% 42%) 100%);
     border-radius: 4rem;
     border: solid 10px var(--secondary-color);
+    flex-grow: 1;
 }
 a{
     text-decoration: none;
@@ -108,10 +109,20 @@ p{
     background-color: var(--button-hover-color);
     scale: 1.2;
 }
-.big-buttons{
-    margin-top: 10rem;
+.ladda, .spara{
+    display: flex;
+    align-items: center;
 }
-.big-buttons button{
+.bottom{
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+}
+.papperskorgikon {
+    font-size: clamp(20px, 3vw, 30px);
+    margin-bottom: 2rem;
+}
+.papperskorgikon button{
     color: white;
     height: 3rem;
     width: 7rem;
@@ -123,11 +134,7 @@ p{
     margin: 5px;
     transition: all 0.3s ease, transform 0.3s ease;
 }
-.big-buttons button:hover{
+.papperskorgikon button:hover{
     background-color: var(--button-hover-color);
     scale: 1.1;
-}
-.ladda, .spara{
-    display: flex;
-    align-items: center;
 }

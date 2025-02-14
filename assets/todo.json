@@ -1,14 +1,18 @@
 [
     {
-        "task": "Vakna",
-        "done": true
-    },
-    {
         "task": "Frukost",
-        "done": true
+        "done": false
     },
     {
         "task": "Middag",
+        "done": false
+    },
+    {
+        "task": "Fotboll",
+        "done": false
+    },
+    {
+        "task": "Sova",
         "done": false
     }
 ]
