@@ -1,11 +1,11 @@
 [
     {
         "task": "Vakna",
-        "done": false
+        "done": true
     },
     {
         "task": "Frukost",
-        "done": false
+        "done": true
     },
     {
         "task": "Middag",

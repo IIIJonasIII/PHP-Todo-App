@@ -2,7 +2,6 @@
     require("php/functions.php");
     $jsonFile = "assets/todo.json";
     $notes = laddaJson($jsonFile);  
-    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,24 +22,14 @@
         </form>
         
         <?php
-
-            if (isset($_GET["redigera"])) {
-                $index = $_GET["redigera"];
-            }
-        
-            if (isset($_GET["ändraruta"]) && isset($_GET["index"])) {
-                $index = $_GET["index"];
-                $nyÄndring = test_input($_GET["ändraruta"]);
-                $notes[$index]['task'] = $nyÄndring;
-                sparaJson($jsonFile, $notes);
-            }
-            
+            //Input text
             if (!empty($_GET["textruta"])) {
                 $note = test_input($_GET["textruta"]);
                 $notes[] = ["task" => $note, "done" => false];
                 sparaJson($jsonFile, $notes);
             }
-            
+
+            //Klar-knapp
             if (isset($_GET["klar"])){
                 $klar = $_GET["klar"];
                 if ($notes[$klar]["done"] == true){
@@ -54,6 +43,20 @@
                 sparaJson($jsonFile, $notes); 
             }
 
+            //Redigera-knapp
+            if (isset($_GET["redigera"])) {
+                $index = $_GET["redigera"];
+            }
+
+            //Input för redigering
+            if (isset($_GET["ändraruta"]) && isset($_GET["index"])) {
+                $index = $_GET["index"];
+                $nyÄndring = test_input($_GET["ändraruta"]);
+                $notes[$index]['task'] = $nyÄndring;
+                sparaJson($jsonFile, $notes);
+            }
+            
+            //Ta bort-knapp
             if (isset($_GET["tabort"])) {
                 $tabort = $_GET['tabort'];
                 unset($notes[$tabort]);  
@@ -61,6 +64,7 @@
                 sparaJson($jsonFile, $notes);
             }
 
+            //Utskrift av anteckningar + knappar
             foreach ($notes as $index => $note) {
                 $färg = $note["done"] ? "green" : "white";
                 echo '<form method="GET" class="notes">
@@ -73,6 +77,8 @@
                     </form>
                    ';
             }
+
+            //Om redigera-kanppen är tryckt skrivs redigera-input ut
             if (isset($_GET["redigera"]) && isset($notes[$_GET["redigera"]])) {
                 $index = $_GET["redigera"];
                 echo '
